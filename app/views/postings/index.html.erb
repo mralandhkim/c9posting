@@ -1,0 +1,34 @@
+<h1>Add a posting</h1>
+
+<form action="/postings/create" method="POST">
+    <div class="form-group">
+      <label for="title">Title:</label>
+      <input type="text" name="title" class="form-control" id="title">
+    </div>
+    <div class="form-group">
+      <label for="posting_content">Content:</label>
+      <textarea name="content" class="form-control" rows="5" id="content"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<h2>Listing all postings</h2>
+<% @all_postings.each do |p| %>
+   <h3>Title: <%= p.title %></h3>
+   <p>Content: <%= p.posting_content %></p>
+   
+   <% @all_comments.each do |c| %>
+      <% if c.posting_id == p.id %>
+           <p><%= c.comment_content %></p>
+      <% end %>
+   <% end %>
+   
+<form action="/comments/create" method="POST">
+    <div class="form-group">
+      <label for="Comment">Comment:</label>
+      <input type="hidden" value="<%= p.id %>" name="id_of_posting">
+      <input type="text" name="comment" class="form-control" id="comment">
+    </div>
+    <button type="submit" class="btn btn-default">Submit</button>
+</form>
+<% end %>
